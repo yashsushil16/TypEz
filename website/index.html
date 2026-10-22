@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TypEz — Dual-Engine Text Expansion & AI Writing Assistant for Chrome</title>
-  <meta name="description" content="A Manifest V3 Chrome Extension serving as a dual-engine text expansion and agentic AI writing assistant. Low-latency DOM manipulation, local storage first, with Groq and Gemini API integration." />
+  <title>TypEz — Dual-Engine Text Expansion & Inline Writing Assistant</title>
+  <meta name="description" content="Dual-engine text expansion for Google Chrome: 0ms local macro shortcuts via '?' and contextual AI rewriting via '!'. Local storage first with zero telemetry." />
   
-  <!-- Typography -->
+  <!-- Typography: DM Sans, Sora, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Sora:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Sora:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="css/styles.css" />
 </head>
@@ -19,23 +19,23 @@
   <header class="site-nav">
     <div class="container nav-inner">
       <a href="index.html" class="brand">
-        <div class="brand-badge">TE</div>
+        <div class="brand-mark">TE</div>
         <span class="brand-name">TypEz</span>
       </a>
 
       <nav>
         <ul class="nav-links">
-          <li><a href="#dual-engine" class="nav-link">Dual Engine</a></li>
-          <li><a href="#simulator" class="nav-link">Live Simulator</a></li>
-          <li><a href="#architecture" class="nav-link">Architecture</a></li>
-          <li><a href="#install" class="nav-link">Install Guide</a></li>
+          <li><a href="#dual-engine" class="nav-link">Architecture</a></li>
+          <li><a href="#simulator" class="nav-link">Playground</a></li>
+          <li><a href="#install" class="nav-link">Installation</a></li>
           <li><a href="tos.html" class="nav-link">Terms</a></li>
           <li><a href="privacy.html" class="nav-link">Privacy</a></li>
         </ul>
       </nav>
 
       <div class="nav-actions">
-        <a href="#install" class="btn btn-primary btn-sm">Get TypEz</a>
+        <a href="https://github.com/yashsushil16/TypEz" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">GitHub</a>
+        <a href="#install" class="btn btn-primary btn-sm">Get Extension</a>
       </div>
     </div>
   </header>
@@ -44,184 +44,213 @@
   <section class="hero-section">
     <div class="container hero-grid">
       <div class="hero-content">
-        <div class="hero-tag">Manifest V3 Chrome Extension</div>
-        <h1 class="hero-title">Text expansion for instant phrases. AI for paragraph transformations.</h1>
+        <h1 class="hero-title">Text expansion for instant phrases.<br />AI for paragraph transformations.</h1>
         <p class="hero-description">
-          TypEz unifies zero-latency local snippet expansion with inline Groq and Gemini natural language rewriting. Trigger shortcuts with <code style="font-family:var(--font-mono); font-weight:600; color:var(--text-primary); background:var(--bg-elevated); padding:2px 6px; border-radius:4px;">?</code> for zero-latency local insertion, or invoke <code style="font-family:var(--font-mono); font-weight:600; color:var(--accent); background:var(--accent-light); padding:2px 6px; border-radius:4px;">!</code> to transform entire paragraphs right in the DOM.
+          TypEz unifies zero-latency local macro substitution with in-place natural language rewriting. Type <code style="font-family:var(--font-mono); font-weight:600; color:var(--ink-primary); background:var(--bg-subtle); padding:2px 6px; border-radius:3px;">?</code> for offline expansion, or <code style="font-family:var(--font-mono); font-weight:600; color:var(--accent); background:var(--accent-bg); padding:2px 6px; border-radius:3px;">!</code> to transform entire paragraphs right in the DOM.
         </p>
 
         <div class="hero-ctas">
-          <a href="#install" class="btn btn-primary">Download Extension</a>
-          <a href="#simulator" class="btn btn-secondary">Try Live Playground</a>
+          <a href="#install" class="btn btn-primary">Install Extension</a>
+          <a href="#simulator" class="btn btn-secondary">Test Interactive Slate</a>
         </div>
 
-        <div class="specs-strip">
+        <div class="meta-specs-strip">
           <div class="spec-item">
             <span class="spec-val">0ms</span>
-            <span class="spec-label">Local Expansion Latency</span>
-          </div>
-          <div class="spec-item">
-            <span class="spec-val">100% Free</span>
-            <span class="spec-label">Groq & Gemini Tiers</span>
+            <span class="spec-label">Local Macro Latency</span>
           </div>
           <div class="spec-item">
             <span class="spec-val">Local-First</span>
             <span class="spec-label">chrome.storage.local</span>
           </div>
           <div class="spec-item">
+            <span class="spec-val">Direct API</span>
+            <span class="spec-label">Groq & Gemini BYOK</span>
+          </div>
+          <div class="spec-item">
             <span class="spec-val">Zero Telemetry</span>
-            <span class="spec-label">No Third-Party Tracking</span>
+            <span class="spec-label">No Proxy Servers</span>
           </div>
         </div>
       </div>
 
-      <!-- Live Simulator Component in Hero -->
-      <div class="hero-preview-card" id="simulator">
-        <div class="preview-header">
-          <div class="preview-title-bar">
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="preview-filename">live-input-simulation.dom</span>
+      <!-- Minimal Interactive Slate (No fake OS chrome, clean tactile design) -->
+      <div class="slate-card" id="simulator">
+        <div class="slate-topbar">
+          <div class="slate-title-left">
+            <span class="slate-indicator"></span>
+            <span>TYPEZ WORKBENCH</span>
           </div>
-          <span class="preview-badge">Interactive Demo</span>
+          <span class="slate-mode">BUFFER: ACTIVE</span>
         </div>
 
-        <div class="preview-body">
-          <div class="input-sim-wrapper">
-            <div class="floating-loader" id="heroSimLoader">TypEz is thinking...</div>
-            <textarea 
-              id="heroSimInput" 
-              class="input-sim-field" 
-              placeholder="Click here and try typing '?@' or '?sig' + Space, or type a sentence followed by '!casual' + Space..."
-            >Send the contract over to ?@ </textarea>
-          </div>
+        <div class="slate-canvas">
+          <div class="slate-loader" id="heroSimLoader">Thinking...</div>
+          <textarea 
+            id="heroSimInput" 
+            class="slate-input-field" 
+            placeholder="Type your message here. Try '?@ ' or '?sig ' or type a sentence followed by '!casual '..."
+          >Send the contract over to ?@ </textarea>
+        </div>
 
-          <div class="quick-actions">
-            <span class="quick-label">Try one click:</span>
-            <button class="chip-btn" onclick="injectHeroDemo('email')">?@ (Email)</button>
-            <button class="chip-btn" onclick="injectHeroDemo('sig')">?sig (Signature)</button>
-            <button class="chip-btn" onclick="injectHeroDemo('casual')">!casual (Friendly Tone)</button>
-            <button class="chip-btn" onclick="injectHeroDemo('fix')">!fix (Grammar)</button>
-          </div>
+        <div class="slate-keycaps-bar">
+          <span class="keycaps-label">Quick test:</span>
+          <button class="keycap-btn" onclick="injectHeroDemo('email')">
+            <kbd>?@</kbd> email
+          </button>
+          <button class="keycap-btn" onclick="injectHeroDemo('sig')">
+            <kbd>?sig</kbd> signature
+          </button>
+          <button class="keycap-btn" onclick="injectHeroDemo('casual')">
+            <kbd>!casual</kbd> tone
+          </button>
+          <button class="keycap-btn" onclick="injectHeroDemo('fix')">
+            <kbd>!fix</kbd> grammar
+          </button>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Notice Strip Mentioning Platform at the Bottom of Hero -->
+  <div class="platform-notice-strip">
+    <div class="container platform-notice-inner">
+      <div class="platform-notice-left">
+        <span class="platform-bullet">•</span>
+        <span>Platform: <strong>Google Chrome Manifest V3 Extension</strong></span>
+      </div>
+      <div>
+        <span>Works 100% offline for local macros &bull; Direct client-to-API for AI &bull; No middleman tracking</span>
+      </div>
+    </div>
+  </div>
 
   <!-- Dual Engine Architecture Section -->
   <section class="section" id="dual-engine">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag">System Design</span>
-        <h2 class="section-title">The Dual-Engine Approach</h2>
+        <div class="section-label">Architecture</div>
+        <h2 class="section-title">The Dual-Engine Division</h2>
         <p class="section-subtitle">
-          Most extensions either do dumb string replacement or slow cloud-only generation. TypEz splits duties cleanly between two purpose-built engines.
+          Instead of routing simple shortcuts through slow cloud models, TypEz cleanly separates local macro expansion from contextual generative rewriting.
         </p>
       </div>
 
-      <div class="dual-engine-grid">
-        <!-- Engine 1: Local -->
-        <div class="engine-card">
-          <div class="engine-header">
-            <div class="engine-symbol local">?</div>
-            <span class="engine-status-pill">Local Engine (Offline)</span>
+      <div class="dual-engine-split">
+        <!-- Engine 01 -->
+        <div class="engine-block">
+          <div class="engine-lead">
+            <div class="engine-symbol-box local">?</div>
+            <span class="engine-tag">Engine 01 // Local Macro</span>
           </div>
-          <h3 class="engine-card-title">Local Symbol Expansion</h3>
-          <p class="engine-card-desc">
-            Instantly replaces predefined trigger codes without network calls, roundtrips, or external dependencies.
+          <h3 class="engine-title">Local Symbol Expansion</h3>
+          <p class="engine-desc">
+            Instantly replaces predefined trigger codes in the active DOM without roundtrips or server latency.
           </p>
 
-          <ul class="feature-list">
-            <li class="feature-item">
-              <span class="feature-bullet"></span>
-              <span><strong>0ms Sub-frame Replacement:</strong> Keystroke buffer monitors input streams and executes synchronous DOM substitution.</span>
-            </li>
-            <li class="feature-item">
-              <span class="feature-bullet"></span>
-              <span><strong>Completely Offline:</strong> All snippet dictionaries live inside your browser's <code style="font-family:var(--font-mono)">chrome.storage.local</code>.</span>
-            </li>
-            <li class="feature-item">
-              <span class="feature-bullet"></span>
-              <span><strong>Universal DOM Hook:</strong> Compatible with standard inputs, textareas, and rich contenteditable containers.</span>
-            </li>
-          </ul>
+          <table class="specs-table">
+            <tr>
+              <td class="spec-prop">TRIGGER</td>
+              <td class="spec-def"><code style="font-family:var(--font-mono)">?</code> followed by command name + Space</td>
+            </tr>
+            <tr>
+              <td class="spec-prop">EXECUTION</td>
+              <td class="spec-def">Synchronous (0ms sub-frame replacement)</td>
+            </tr>
+            <tr>
+              <td class="spec-prop">STORAGE</td>
+              <td class="spec-def"><code style="font-family:var(--font-mono)">chrome.storage.local</code> (sandbox isolated)</td>
+            </tr>
+            <tr>
+              <td class="spec-prop">NETWORK</td>
+              <td class="spec-def">Zero network requests &bull; 100% offline</td>
+            </tr>
+          </table>
 
-          <div class="code-snippet-box">
-            <div class="code-line"><span class="code-trigger">?@</span> <span class="code-result">→ yash.sushil16@gmail.com</span></div>
-            <div class="code-line"><span class="code-trigger">?sig</span> <span class="code-result">→ Best regards, Yash Sushil</span></div>
-            <div class="code-line"><span class="code-trigger">?addr</span> <span class="code-result">→ 742 Evergreen Terrace...</span></div>
+          <div class="code-slate">
+            <div class="code-slate-row"><span class="code-trigger">?@</span> <span class="code-output">→ yash.sushil16@gmail.com</span></div>
+            <div class="code-slate-row"><span class="code-trigger">?sig</span> <span class="code-output">→ Best regards, Yash Sushil</span></div>
+            <div class="code-slate-row"><span class="code-trigger">?addr</span> <span class="code-output">→ 742 Evergreen Terrace...</span></div>
           </div>
         </div>
 
-        <!-- Engine 2: AI -->
-        <div class="engine-card">
-          <div class="engine-header">
-            <div class="engine-symbol ai">!</div>
-            <span class="engine-status-pill">Agentic AI Engine</span>
+        <!-- Engine 02 -->
+        <div class="engine-block">
+          <div class="engine-lead">
+            <div class="engine-symbol-box ai">!</div>
+            <span class="engine-tag">Engine 02 // Ambient AI</span>
           </div>
-          <h3 class="engine-card-title">Contextual AI Transformation</h3>
-          <p class="engine-card-desc">
-            Transforms paragraphs in-place using free-tier Groq (Llama 3.3 70B) and Google Gemini 2.0 Flash APIs.
+          <h3 class="engine-title">Contextual AI Transformation</h3>
+          <p class="engine-desc">
+            Extracts the preceding paragraph on the fly and transforms it in-place using free-tier Groq and Gemini APIs.
           </p>
 
-          <ul class="feature-list">
-            <li class="feature-item">
-              <span class="feature-bullet"></span>
-              <span><strong>Context-Aware Extraction:</strong> Reads the preceding paragraph context before the trigger command automatically.</span>
-            </li>
-            <li class="feature-item">
-              <span class="feature-bullet"></span>
-              <span><strong>Provider Failover:</strong> Routes through Groq for high-speed inference with automatic fallback to Gemini 2.0 Flash.</span>
-            </li>
-            <li class="feature-item">
-              <span class="feature-bullet"></span>
-              <span><strong>Custom Command Templates:</strong> Define your own prompt blueprints like <code style="font-family:var(--font-mono)">!formal</code>, <code style="font-family:var(--font-mono)">!fix</code>, or <code style="font-family:var(--font-mono)">!summarize</code>.</span>
-            </li>
-          </ul>
+          <table class="specs-table">
+            <tr>
+              <td class="spec-prop">TRIGGER</td>
+              <td class="spec-def"><code style="font-family:var(--font-mono)">!</code> followed by prompt template + Space</td>
+            </tr>
+            <tr>
+              <td class="spec-prop">MODELS</td>
+              <td class="spec-def">Groq (Llama 3.1) &bull; Google Gemini (3.8 Flash)</td>
+            </tr>
+            <tr>
+              <td class="spec-prop">ROUTING</td>
+              <td class="spec-def">Direct Chrome worker to API &bull; Automatic failover</td>
+            </tr>
+            <tr>
+              <td class="spec-prop">TEMPLATES</td>
+              <td class="spec-def">Customizable system prompts via React popup</td>
+            </tr>
+          </table>
 
-          <div class="code-snippet-box">
-            <div class="code-line"><span class="code-trigger">!casual</span> <span class="code-result">→ Rewrites in friendly conversational tone</span></div>
-            <div class="code-line"><span class="code-trigger">!formal</span> <span class="code-result">→ Elevates into professional business prose</span></div>
-            <div class="code-line"><span class="code-trigger">!fix</span> <span class="code-result">→ Corrects grammar and syntax errors</span></div>
+          <div class="code-slate">
+            <div class="code-slate-row"><span class="code-trigger">!casual</span> <span class="code-output">→ Friendly, conversational rewrite</span></div>
+            <div class="code-slate-row"><span class="code-trigger">!formal</span> <span class="code-output">→ Executive, business-ready prose</span></div>
+            <div class="code-slate-row"><span class="code-trigger">!fix</span> <span class="code-output">→ Corrects grammar and syntax errors</span></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Interactive Studio Playground -->
+  <!-- Interactive Studio -->
   <section class="section">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag">Interactive Testing</span>
-        <h2 class="section-title">Test The Dual-Engine In Real Time</h2>
+        <div class="section-label">Live Testing</div>
+        <h2 class="section-title">Interactive Stream Monitor</h2>
         <p class="section-subtitle">
-          Type or edit the left panel and terminate any trigger with a Space or Enter key. Watch the real-time buffer inspector and output monitor on the right.
+          Type or edit the left panel and terminate any trigger with Space. Inspect execution output and token telemetry on the right.
         </p>
       </div>
 
-      <div class="studio-wrapper">
+      <div class="studio-frame">
         <div class="studio-grid">
-          <div class="studio-input-col">
-            <div class="studio-col-title">Active Input Simulator (Type Here)</div>
-            <textarea id="studioInput" class="studio-textarea" placeholder="Type text here. Add '?@' or '?phone' for local expansion, or add '!formal' or '!fix' to rewrite.">We need to schedule the sync meeting right away. Can you reach me at ?phone</textarea>
+          <div>
+            <div class="studio-header-label">// Input Stream</div>
+            <textarea id="studioInput" class="studio-textarea" placeholder="Type text here. Add '?@ ' or '?phone ' for local expansion, or add '!formal ' to rewrite.">We need to schedule the sync meeting right away. Can you reach me at ?phone </textarea>
             
             <div class="studio-presets">
-              <span class="quick-label">Load sample:</span>
-              <button class="chip-btn" onclick="injectStudioPreset('?meet', 'Let us jump on the video call at')">Insert ?meet</button>
-              <button class="chip-btn" onclick="injectStudioPreset('!formal', 'hey guys can you check this out asap')">Apply !formal</button>
-              <button class="chip-btn" onclick="injectStudioPreset('!fix', 'their are three errors in teh doccument')">Apply !fix</button>
-              <button class="chip-btn" onclick="injectStudioPreset('!summarize', 'TypEz is a high-performance Chrome extension designed for low latency. It unifies local text expansion with cloud AI writing assistance so users can type faster across all inputs.')">Apply !summarize</button>
+              <span class="keycaps-label">Load sample:</span>
+              <button class="keycap-btn" onclick="injectStudioPreset('?meet', 'Let us jump on the video call at')">
+                <kbd>?meet</kbd> meeting link
+              </button>
+              <button class="keycap-btn" onclick="injectStudioPreset('!formal', 'hey guys can you check this out asap')">
+                <kbd>!formal</kbd> tone elevate
+              </button>
+              <button class="keycap-btn" onclick="injectStudioPreset('!fix', 'their are three errors in teh doccument')">
+                <kbd>!fix</kbd> syntax repair
+              </button>
             </div>
           </div>
 
-          <div class="studio-preview-col">
-            <div class="studio-col-title">Engine Execution Monitor</div>
-            <div id="studioOutput" class="studio-output-box">[Engine Ready]
-Awaiting trigger command (? or !) followed by Space/Enter.
+          <div>
+            <div class="studio-header-label">// Engine Monitor</div>
+            <div id="studioOutput" class="studio-output-slate">[Engine Ready]
+Awaiting trigger command (? or !) followed by Space.
 
-Active triggers:
+Registered shortcuts:
   ?@      → yash.sushil16@gmail.com
   ?phone  → +1 (555) 234-5678
   ?sig    → Lead Engineer signature
@@ -234,39 +263,39 @@ Active triggers:
     </div>
   </section>
 
-  <!-- Security & Architecture -->
-  <section class="section" id="architecture">
+  <!-- Pillars -->
+  <section class="section">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag">Privacy & Security</span>
-        <h2 class="section-title">Built On A Zero-Telemetry Architecture</h2>
+        <div class="section-label">Privacy Model</div>
+        <h2 class="section-title">Zero-Telemetry By Design</h2>
         <p class="section-subtitle">
-          Text assistants often harvest every keystroke. TypEz is built from the ground up to respect your confidentiality.
+          Traditional text assistants harvest keystrokes on remote servers. TypEz is architected to keep your personal data strictly confined to your device.
         </p>
       </div>
 
-      <div class="arch-grid">
-        <div class="arch-card">
-          <div class="arch-number">01</div>
-          <h3 class="arch-title">Direct Client-to-API Calls</h3>
-          <p class="arch-text">
-            When using the AI engine, requests travel directly from the background service worker to Groq or Google's official API endpoints. There is no middleman server inspecting or storing your prompts.
+      <div class="pillars-grid">
+        <div class="pillar-item">
+          <div class="pillar-num">01</div>
+          <h3 class="pillar-title">Direct Client-to-API Calls</h3>
+          <p class="pillar-text">
+            When you invoke the AI engine, requests travel directly from the background service worker to Groq or Google's endpoints. No middleman server inspects or logs your text.
           </p>
         </div>
 
-        <div class="arch-card">
-          <div class="arch-number">02</div>
-          <h3 class="arch-title">Bring Your Own Key (BYOK)</h3>
-          <p class="arch-text">
-            Use your personal free-tier API keys from Groq Cloud and Google AI Studio. Your keys are stored exclusively in Chrome's encrypted storage sandbox on your device.
+        <div class="pillar-item">
+          <div class="pillar-num">02</div>
+          <h3 class="pillar-title">Bring Your Own Key (BYOK)</h3>
+          <p class="pillar-text">
+            Use your personal free-tier API keys from Groq Cloud and Google AI Studio. Your keys are stored exclusively in Chrome's encrypted storage sandbox on your computer.
           </p>
         </div>
 
-        <div class="arch-card">
-          <div class="arch-number">03</div>
-          <h3 class="arch-title">Scoped DOM Observer</h3>
-          <p class="arch-text">
-            TypEz only tracks keystrokes once an explicit trigger symbol (<code style="font-family:var(--font-mono)">?</code> or <code style="font-family:var(--font-mono)">!</code>) is typed. Normal typing is never buffered or recorded.
+        <div class="pillar-item">
+          <div class="pillar-num">03</div>
+          <h3 class="pillar-title">Volatile Keystroke Buffer</h3>
+          <p class="pillar-text">
+            TypEz monitors memory only after an explicit trigger symbol (<code style="font-family:var(--font-mono)">?</code> or <code style="font-family:var(--font-mono)">!</code>) is typed. Normal typing is never buffered, stored, or analyzed.
           </p>
         </div>
       </div>
@@ -277,40 +306,40 @@ Active triggers:
   <section class="section" id="install">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag">Quick Start</span>
-        <h2 class="section-title">Install TypEz in 4 Simple Steps</h2>
+        <div class="section-label">Setup</div>
+        <h2 class="section-title">Install in 30 Seconds</h2>
         <p class="section-subtitle">
-          Load TypEz into Google Chrome or any Chromium-compatible browser (Brave, Edge, Arc, Opera) in under two minutes.
+          Load TypEz into Google Chrome or any Chromium-compatible browser with zero dependencies required.
         </p>
       </div>
 
-      <div class="steps-grid">
-        <div class="step-card">
-          <div class="step-badge">1</div>
-          <h4 class="step-title">Build Extension</h4>
-          <p class="step-desc">Clone the repository and compile the React popup bundle using Vite.</p>
-          <div class="step-code">npm run build</div>
+      <div class="install-flow">
+        <div class="flow-step">
+          <div class="flow-step-num">01</div>
+          <h4 class="flow-step-title">Download Repository</h4>
+          <p class="flow-step-desc">Download the repository ZIP or clone directly from GitHub.</p>
+          <div class="flow-step-code">git clone .../TypEz.git</div>
         </div>
 
-        <div class="step-card">
-          <div class="step-badge">2</div>
-          <h4 class="step-title">Open Extensions</h4>
-          <p class="step-desc">Navigate to the Chrome extensions manager and enable Developer Mode in the top right.</p>
-          <div class="step-code">chrome://extensions</div>
+        <div class="flow-step">
+          <div class="flow-step-num">02</div>
+          <h4 class="flow-step-title">Open Extensions</h4>
+          <p class="flow-step-desc">Navigate to the extensions manager and toggle on Developer Mode.</p>
+          <div class="flow-step-code">chrome://extensions</div>
         </div>
 
-        <div class="step-card">
-          <div class="step-badge">3</div>
-          <h4 class="step-title">Load Unpacked</h4>
-          <p class="step-desc">Click "Load unpacked" and select the <code style="font-family:var(--font-mono)">extension/dist</code> directory.</p>
-          <div class="step-code">Select extension/dist</div>
+        <div class="flow-step">
+          <div class="flow-step-num">03</div>
+          <h4 class="flow-step-title">Load Unpacked</h4>
+          <p class="flow-step-desc">Click "Load unpacked" and select the pre-compiled <code style="font-family:var(--font-mono)">extension/dist</code> folder.</p>
+          <div class="flow-step-code">Select extension/dist</div>
         </div>
 
-        <div class="step-card">
-          <div class="step-badge">4</div>
-          <h4 class="step-title">Add Free API Keys</h4>
-          <p class="step-desc">Open the TypEz popup icon and paste your free Groq or Gemini API key to activate AI transformations.</p>
-          <div class="step-code">Groq or Gemini</div>
+        <div class="flow-step">
+          <div class="flow-step-num">04</div>
+          <h4 class="flow-step-title">Add Free API Keys</h4>
+          <p class="flow-step-desc">Open the TypEz popup and paste your free Groq or Gemini API key to activate AI.</p>
+          <div class="flow-step-code">Groq or Gemini</div>
         </div>
       </div>
     </div>
@@ -322,8 +351,8 @@ Active triggers:
       <div class="footer-top">
         <div>
           <div class="brand">
-            <div class="brand-badge">TE</div>
-            <span class="brand-name" style="color:var(--text-inverse)">TypEz</span>
+            <div class="brand-mark">TE</div>
+            <span class="brand-name">TypEz</span>
           </div>
           <p class="footer-brand-desc">
             Dual-engine text expansion and AI writing assistant built for Google Chrome (Manifest V3). Type faster, write smarter, own your data.
@@ -331,17 +360,16 @@ Active triggers:
         </div>
 
         <div>
-          <h5 class="footer-col-title">Product</h5>
+          <div class="footer-col-title">Navigation</div>
           <ul class="footer-links">
-            <li><a href="#dual-engine" class="footer-link">Dual Engine</a></li>
-            <li><a href="#simulator" class="footer-link">Live Playground</a></li>
-            <li><a href="#architecture" class="footer-link">Architecture</a></li>
+            <li><a href="#dual-engine" class="footer-link">Architecture</a></li>
+            <li><a href="#simulator" class="footer-link">Interactive Slate</a></li>
             <li><a href="#install" class="footer-link">Installation Guide</a></li>
           </ul>
         </div>
 
         <div>
-          <h5 class="footer-col-title">Documentation</h5>
+          <div class="footer-col-title">Documentation</div>
           <ul class="footer-links">
             <li><a href="tos.html" class="footer-link">Terms of Service</a></li>
             <li><a href="privacy.html" class="footer-link">Privacy Policy</a></li>
@@ -351,18 +379,19 @@ Active triggers:
         </div>
 
         <div>
-          <h5 class="footer-col-title">Contact</h5>
+          <div class="footer-col-title">Source & License</div>
           <ul class="footer-links">
+            <li><a href="https://github.com/yashsushil16/TypEz" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub Repository</a></li>
             <li><a href="mailto:yash.sushil16@gmail.com" class="footer-link">yash.sushil16@gmail.com</a></li>
-            <li><span class="footer-link">Version 1.0.0 (MV3)</span></li>
-            <li><span class="footer-link">Open Source Architecture</span></li>
+            <li><span class="footer-link">Manifest V3 Chrome Extension</span></li>
+            <li><span class="footer-link">Open Source (MIT)</span></li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <span>&copy; 2026 TypEz. All rights reserved.</span>
-        <span>Built with React, Vite, Tailwind & Manifest V3.</span>
+        <span>&copy; 2026 TypEz. Designed with minimal architectural restraint.</span>
+        <span>Google Chrome Manifest V3 &bull; React &bull; Tailwind &bull; BYOK AI</span>
       </div>
     </div>
   </footer>
