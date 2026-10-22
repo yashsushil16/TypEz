@@ -43,6 +43,13 @@ ensureDefaults();
 
 async function ensureDefaults() {
   const existing = await chrome.storage.local.get(['commands', 'ai_config', 'ai_commands']);
+  
+  // Migrate deprecated Gemini model if stored
+  if (existing.ai_config && (existing.ai_config.gemini_model === 'gemini-2.0-flash' || existing.ai_config.gemini_model === 'gemini-1.5-flash')) {
+    existing.ai_config.gemini_model = 'gemini-3.8-flash';
+    await chrome.storage.local.set({ ai_config: existing.ai_config });
+  }
+
   if (existing.commands && Object.keys(existing.commands).length > 0) {
     return; // Already initialized
   }
@@ -58,7 +65,7 @@ async function ensureDefaults() {
       groq_api_key: '',
       gemini_api_key: '',
       groq_model: 'llama-3.3-70b-versatile',
-      gemini_model: 'gemini-2.0-flash',
+      gemini_model: 'gemini-3.8-flash',
     },
     ai_commands: {
       '!casual':
@@ -201,7 +208,10 @@ async function callGroq(apiKey, model, prompt) {
    GEMINI API CLIENT
    ══════════════════════════════════ */
 async function callGemini(apiKey, model, prompt) {
-  const modelId = model || 'gemini-2.0-flash';
+  let modelId = model || 'gemini-3.8-flash';
+  if (modelId === 'gemini-2.0-flash' || modelId === 'gemini-1.5-flash') {
+    modelId = 'gemini-3.8-flash';
+  }
   const url =
     'https://generativelanguage.googleapis.com/v1beta/models/' +
     modelId +
@@ -251,7 +261,7 @@ async function testAPIKey(provider, apiKey) {
       return { success: true };
     }
     if (provider === 'gemini') {
-      await callGemini(apiKey, 'gemini-2.0-flash', 'Respond with only the word "connected".');
+      await callGemini(apiKey, 'gemini-3.8-flash', 'Respond with only the word "connected".');
       return { success: true };
     }
     return { success: false, error: 'Unknown provider' };

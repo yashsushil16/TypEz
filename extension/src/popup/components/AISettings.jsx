@@ -43,15 +43,18 @@ export default function AISettings() {
           'ai_config',
           'ai_commands',
         ]);
-        setConfig(
-          result.ai_config || {
-            primary_provider: 'groq',
-            groq_api_key: '',
-            gemini_api_key: '',
-            groq_model: 'llama-3.3-70b-versatile',
-            gemini_model: 'gemini-2.0-flash',
-          }
-        );
+        const cfg = result.ai_config || {
+          primary_provider: 'groq',
+          groq_api_key: '',
+          gemini_api_key: '',
+          groq_model: 'llama-3.3-70b-versatile',
+          gemini_model: 'gemini-3.8-flash',
+        };
+        if (!cfg.gemini_model || cfg.gemini_model === 'gemini-2.0-flash' || cfg.gemini_model === 'gemini-1.5-flash') {
+          cfg.gemini_model = 'gemini-3.8-flash';
+          chrome.storage.local.set({ ai_config: cfg });
+        }
+        setConfig(cfg);
         setAiCommands(result.ai_commands || {});
       } else {
         setConfig({
@@ -59,7 +62,7 @@ export default function AISettings() {
           groq_api_key: '',
           gemini_api_key: '',
           groq_model: 'llama-3.3-70b-versatile',
-          gemini_model: 'gemini-2.0-flash',
+          gemini_model: 'gemini-3.8-flash',
         });
         setAiCommands({
           '!casual': 'Rewrite in a casual, conversational tone:',
@@ -77,7 +80,7 @@ export default function AISettings() {
         groq_api_key: '',
         gemini_api_key: '',
         groq_model: 'llama-3.3-70b-versatile',
-        gemini_model: 'gemini-2.0-flash',
+        gemini_model: 'gemini-3.8-flash',
       });
       setAiCommands({});
     } finally {
