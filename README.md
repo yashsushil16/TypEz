@@ -76,28 +76,59 @@ TypEz adheres to a strictly defined, **subdued and structural** design language:
 
 ---
 
-## 🚀 Quick Start & Installation
+## 🚀 Installation Guide (Works 100% Offline)
 
-### 1. Build the Extension
+TypEz comes **pre-compiled and ready to use** right out of the repository. You do not need Node.js, npm, or any build tools to install and use it.
+
+### Step 1: Download the Repository
+* **Option A (Instant Download)**: Click the green **Code** button at the top of this repository and click **Download ZIP**. Extract the ZIP file onto your computer.
+* **Option B (Git Clone)**:
+  ```bash
+  git clone https://github.com/yashsushil16/TypEz.git
+  ```
+
+### Step 2: Load into Google Chrome (or Brave / Edge / Arc)
+1. Open Google Chrome and navigate to:
+   ```text
+   chrome://extensions/
+   ```
+2. Enable the **Developer mode** toggle switch in the top-right corner.
+3. Click the **Load unpacked** button in the top-left corner.
+4. In the file picker, navigate to the downloaded repository and select the **`extension/dist`** folder.
+5. TypEz is now active! Pin it to your Chrome toolbar for easy access.
+
+### Step 3: Test It Right Away!
+* Open any webpage (e.g., [google.com](https://www.google.com), Gmail, Notion, Twitter/X, or any text field).
+* Type:
+  ```text
+  hello ?@ 
+  ```
+  *(make sure to press **Space** after `?@`)*
+* It will instantly expand into:
+  ```text
+  hello yash.sushil16@gmail.com 
+  ```
+* **Offline Guarantee**: Local snippets (`?`) work completely offline with zero internet and zero server dependencies.
+
+---
+
+### Step 4 (Optional): Activate AI Writing Assistant
+To enable context-aware natural language transformations (`!casual`, `!formal`, `!fix`, `!summarize`):
+1. Click the TypEz extension icon in your Chrome toolbar.
+2. Go to **AI Settings** in the sidebar.
+3. Paste your free [Groq API Key](https://console.groq.com/keys) or [Gemini API Key](https://aistudio.google.com/app/apikey).
+4. Click **Test Connection** to save.
+
+---
+
+### 🛠️ For Developers: Build from Source (Optional)
+If you wish to modify the React popup or extension code:
 ```bash
 cd extension
 npm install
 npm run build
 ```
-This generates the standalone Chrome extension in `extension/dist/`.
-
-### 2. Load into Google Chrome
-1. Navigate to `chrome://extensions/` in Chrome.
-2. Toggle on **Developer mode** in the top-right corner.
-3. Click **Load unpacked**.
-4. Select the `extension/dist` folder.
-5. Pin the **TypEz** icon to your toolbar.
-
-### 3. Add Free API Keys
-1. Click the TypEz popup icon.
-2. Navigate to **AI Settings** in the sidebar.
-3. Paste your free [Groq API Key](https://console.groq.com/keys) or [Gemini API Key](https://aistudio.google.com/app/apikey).
-4. Click **Test Connection** to verify.
+The compiled files are automatically written to `extension/dist/`.
 
 ---
 
