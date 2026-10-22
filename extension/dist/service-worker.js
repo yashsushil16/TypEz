@@ -44,10 +44,20 @@ ensureDefaults();
 async function ensureDefaults() {
   const existing = await chrome.storage.local.get(['commands', 'ai_config', 'ai_commands']);
   
-  // Migrate deprecated Gemini model if stored
-  if (existing.ai_config && (existing.ai_config.gemini_model === 'gemini-2.0-flash' || existing.ai_config.gemini_model === 'gemini-1.5-flash')) {
-    existing.ai_config.gemini_model = 'gemini-3.8-flash';
-    await chrome.storage.local.set({ ai_config: existing.ai_config });
+  // Migrate deprecated models if stored
+  if (existing.ai_config) {
+    let modified = false;
+    if (existing.ai_config.gemini_model === 'gemini-2.0-flash' || existing.ai_config.gemini_model === 'gemini-1.5-flash') {
+      existing.ai_config.gemini_model = 'gemini-3.8-flash';
+      modified = true;
+    }
+    if (existing.ai_config.groq_model === 'llama-3.3-70b-versatile') {
+      existing.ai_config.groq_model = 'llama-3.1-8b-instant';
+      modified = true;
+    }
+    if (modified) {
+      await chrome.storage.local.set({ ai_config: existing.ai_config });
+    }
   }
 
   if (existing.commands && Object.keys(existing.commands).length > 0) {
@@ -64,7 +74,7 @@ async function ensureDefaults() {
       primary_provider: 'groq',
       groq_api_key: '',
       gemini_api_key: '',
-      groq_model: 'llama-3.3-70b-versatile',
+      groq_model: 'llama-3.1-8b-instant',
       gemini_model: 'gemini-3.8-flash',
     },
     ai_commands: {
@@ -172,6 +182,19 @@ async function handleAITransform(command, text) {
    GROQ API CLIENT
    ══════════════════════════════════ */
 async function callGroq(apiKey, model, prompt) {
+  let modelId = model || 'llama-3.1-8b-instant';
+  try {
+    return await executeGroqRequest(apiKey, modelId, prompt);
+  } catch (err) {
+    if (modelId !== 'llama-3.1-8b-instant' && (err.message.includes('does not exist') || err.message.includes('access'))) {
+      console.warn('[TypEz] Groq model fallback to llama-3.1-8b-instant');
+      return await executeGroqRequest(apiKey, 'llama-3.1-8b-instant', prompt);
+    }
+    throw err;
+  }
+}
+
+async function executeGroqRequest(apiKey, model, prompt) {
   const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -179,7 +202,7 @@ async function callGroq(apiKey, model, prompt) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: model || 'llama-3.3-70b-versatile',
+      model: model,
       messages: [
         {
           role: 'system',
@@ -257,7 +280,7 @@ async function callGemini(apiKey, model, prompt) {
 async function testAPIKey(provider, apiKey) {
   try {
     if (provider === 'groq') {
-      await callGroq(apiKey, 'llama-3.3-70b-versatile', 'Respond with only the word "connected".');
+      await callGroq(apiKey, 'llama-3.1-8b-instant', 'Respond with only the word "connected".');
       return { success: true };
     }
     if (provider === 'gemini') {
