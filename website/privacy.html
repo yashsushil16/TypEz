@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — TypEz</title>
+  <meta name="description" content="Privacy Policy for TypEz Chrome Extension explaining zero-telemetry architecture and local data storage." />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Sora:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="site-nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-badge">TE</div>
+        <span class="brand-name">TypEz</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html#dual-engine" class="nav-link">Dual Engine</a></li>
+          <li><a href="index.html#simulator" class="nav-link">Live Simulator</a></li>
+          <li><a href="index.html#architecture" class="nav-link">Architecture</a></li>
+          <li><a href="tos.html" class="nav-link">Terms</a></li>
+          <li><a href="privacy.html" class="nav-link" style="color:var(--text-primary); font-weight:600;">Privacy</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="index.html#install" class="btn btn-primary btn-sm">Get TypEz</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Privacy Policy Content -->
+  <main class="legal-page">
+    <div class="container legal-content">
+      <div class="legal-header">
+        <h1 class="legal-title">Privacy Policy</h1>
+        <p class="legal-meta">Last updated: October 22, 2026 &bull; Strict Zero-Telemetry Standard</p>
+      </div>
+
+      <section class="legal-section">
+        <h2 class="legal-section-title">1. Our Core Privacy Philosophy</h2>
+        <p class="legal-text">
+          TypEz was engineered with one fundamental rule: <strong>Your keystrokes and personal text belong exclusively to you.</strong> We do not operate tracking servers, we do not log keystrokes, we do not employ analytics SDKs, and we never sell user data.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="legal-section-title">2. Information We Handle and Where It Lives</h2>
+        <p class="legal-text">
+          TypEz handles three specific categories of data:
+        </p>
+        <ul class="legal-list">
+          <li>
+            <strong>Text Expansion Shortcuts:</strong> The phrases, symbols, and expansion bodies you create (such as <code style="font-family:var(--font-mono)">?@</code> for your email) are stored exclusively in your browser's local sandbox via <code style="font-family:var(--font-mono)">chrome.storage.local</code>. They never leave your device unless you explicitly configure the optional self-hosted sync server.
+          </li>
+          <li>
+            <strong>API Keys:</strong> When you provide your personal Groq or Google Gemini API keys in the settings popup, they are stored directly in your local extension storage. They are only transmitted directly to the respective API providers (Groq Cloud or Google Generative Language) to execute your explicit requests.
+          </li>
+          <li>
+            <strong>Keystroke Buffer:</strong> The content script monitors keystrokes in volatile memory only after a designated trigger symbol (<code style="font-family:var(--font-mono)">?</code> or <code style="font-family:var(--font-mono)">!</code>) is pressed. The buffer is completely cleared as soon as you press Space, Enter, or Escape, or if you backspace to empty. Normal keystrokes are never buffered, persisted, or logged.
+          </li>
+        </ul>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="legal-section-title">3. Third-Party Language Model Providers</h2>
+        <p class="legal-text">
+          When you use the AI transformation engine by typing an <code style="font-family:var(--font-mono)">!</code> command, TypEz captures the preceding paragraph of text and sends it directly from your browser's background service worker to:
+        </p>
+        <ul class="legal-list">
+          <li><strong>Groq Cloud API:</strong> Located at <code style="font-family:var(--font-mono)">api.groq.com</code> (subject to Groq's privacy policy).</li>
+          <li><strong>Google Gemini API:</strong> Located at <code style="font-family:var(--font-mono)">generativelanguage.googleapis.com</code> (subject to Google's API service terms).</li>
+        </ul>
+        <p class="legal-text">
+          No other party receives this transmission. TypEz does not route prompts through any proxy or telemetry layer.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="legal-section-title">4. Permissions Used by TypEz</h2>
+        <p class="legal-text">
+          Under Google Chrome Manifest V3, TypEz requests only the permissions necessary for its dual engines:
+        </p>
+        <ul class="legal-list">
+          <li><code style="font-family:var(--font-mono)">storage</code>: Required to persist your snippets, prompt templates, and API keys locally in <code style="font-family:var(--font-mono)">chrome.storage.local</code>.</li>
+          <li><code style="font-family:var(--font-mono)">activeTab</code>: Required to access the active DOM input when you focus on a field.</li>
+          <li><code style="font-family:var(--font-mono)">&lt;all_urls&gt;</code>: Required so text expansion works seamlessly across all web applications (Gmail, Google Docs, Notion, Slack, Twitter/X, and custom CMS fields).</li>
+        </ul>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="legal-section-title">5. Data Retention & Deletion</h2>
+        <p class="legal-text">
+          You retain 100% control over all data. You can inspect, modify, or delete any shortcut or API key at any time through the extension popup. If you uninstall TypEz from Google Chrome, all local settings, snippets, and cached data are instantly purged by the browser.
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="legal-section-title">6. GDPR & CCPA Compliance</h2>
+        <p class="legal-text">
+          Because TypEz does not collect, store, or process personal data on external centralized servers, we do not maintain tracking profiles or sell consumer data under the EU General Data Protection Regulation (GDPR) or California Consumer Privacy Act (CCPA).
+        </p>
+      </section>
+
+      <section class="legal-section">
+        <h2 class="legal-section-title">7. Privacy Inquiries</h2>
+        <p class="legal-text">
+          If you have questions or concerns regarding our privacy practices, please contact <a href="mailto:yash.sushil16@gmail.com" style="color:var(--accent); text-decoration:underline;">yash.sushil16@gmail.com</a>.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <span>&copy; 2026 TypEz. All rights reserved.</span>
+      <div style="display:flex; gap:20px;">
+        <a href="tos.html" style="color:var(--text-inverse-muted);">Terms of Service</a>
+        <a href="privacy.html" style="color:var(--text-inverse); text-decoration:underline;">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

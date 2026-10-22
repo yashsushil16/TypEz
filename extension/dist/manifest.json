@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "TypEz",
+  "description": "Dual-engine text expansion and AI writing assistant. Type faster, write smarter.",
+  "version": "1.0.0",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "TypEz"
+  }
+}
