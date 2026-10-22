@@ -179,16 +179,69 @@ async function handleAITransform(command, text) {
 }
 
 /* ══════════════════════════════════
-   GROQ API CLIENT
+   GROQ API CLIENT & DYNAMIC MODEL RESOLVER
    ══════════════════════════════════ */
+async function getGroqModels(apiKey) {
+  const response = await fetch('https://api.groq.com/openai/v1/models', {
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer ' + apiKey,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.error?.message || 'Groq API error (' + response.status + ')');
+  }
+
+  const data = await response.json();
+  return (data.data || []).map((m) => m.id);
+}
+
+function pickBestGroqModel(availableModels) {
+  if (!availableModels || availableModels.length === 0) {
+    return 'llama3-8b-8192';
+  }
+
+  const preferences = [
+    'llama-3.3-70b-versatile',
+    'llama-3.1-70b-versatile',
+    'llama-3.1-8b-instant',
+    'llama3-70b-8192',
+    'llama3-8b-8192',
+    'gemma2-9b-it',
+    'mixtral-8x7b-32768',
+    'qwen-2.5-32b',
+  ];
+
+  for (const pref of preferences) {
+    if (availableModels.includes(pref)) return pref;
+  }
+
+  const llamaMatch = availableModels.find(
+    (m) => m.toLowerCase().includes('llama') && !m.includes('guard')
+  );
+  if (llamaMatch) return llamaMatch;
+
+  return availableModels[0];
+}
+
 async function callGroq(apiKey, model, prompt) {
-  let modelId = model || 'llama-3.1-8b-instant';
+  let modelId = model;
   try {
+    if (!modelId) {
+      const models = await getGroqModels(apiKey);
+      modelId = pickBestGroqModel(models);
+    }
     return await executeGroqRequest(apiKey, modelId, prompt);
   } catch (err) {
-    if (modelId !== 'llama-3.1-8b-instant' && (err.message.includes('does not exist') || err.message.includes('access'))) {
-      console.warn('[TypEz] Groq model fallback to llama-3.1-8b-instant');
-      return await executeGroqRequest(apiKey, 'llama-3.1-8b-instant', prompt);
+    if (err.message.includes('does not exist') || err.message.includes('access')) {
+      console.warn('[TypEz] Model not accessible, dynamically fetching available models...');
+      const models = await getGroqModels(apiKey);
+      const fallbackModel = pickBestGroqModel(models);
+      console.log('[TypEz] Using discovered Groq model:', fallbackModel);
+      return await executeGroqRequest(apiKey, fallbackModel, prompt);
     }
     throw err;
   }
@@ -280,8 +333,18 @@ async function callGemini(apiKey, model, prompt) {
 async function testAPIKey(provider, apiKey) {
   try {
     if (provider === 'groq') {
-      await callGroq(apiKey, 'llama-3.1-8b-instant', 'Respond with only the word "connected".');
-      return { success: true };
+      const models = await getGroqModels(apiKey);
+      const activeModel = pickBestGroqModel(models);
+      
+      // Update local storage with the verified model
+      const stored = await chrome.storage.local.get('ai_config');
+      if (stored && stored.ai_config) {
+        stored.ai_config.groq_model = activeModel;
+        await chrome.storage.local.set({ ai_config: stored.ai_config });
+      }
+
+      await executeGroqRequest(apiKey, activeModel, 'Respond with only the word "connected".');
+      return { success: true, message: `Connected (${activeModel})` };
     }
     if (provider === 'gemini') {
       await callGemini(apiKey, 'gemini-3.8-flash', 'Respond with only the word "connected".');

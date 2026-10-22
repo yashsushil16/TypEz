@@ -242,7 +242,7 @@ export default function AISettings() {
                 testResult.success ? 'test-success' : 'test-error'
               }`}
             >
-              {testResult.success ? 'Connected successfully' : testResult.error}
+              {testResult.success ? (testResult.message || 'Connected successfully') : testResult.error}
             </span>
           )}
         </div>
@@ -284,7 +284,7 @@ export default function AISettings() {
                 testResult.success ? 'test-success' : 'test-error'
               }`}
             >
-              {testResult.success ? 'Connected successfully' : testResult.error}
+              {testResult.success ? (testResult.message || 'Connected successfully') : testResult.error}
             </span>
           )}
         </div>
